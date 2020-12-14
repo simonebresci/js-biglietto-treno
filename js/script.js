@@ -5,34 +5,89 @@
 // va applicato uno sconto del 20% per i minorenni
 // va applicato uno sconto del 40% per gli over 65
 
-
-// // Debug
-// console.group('Debug');
-// console.log('Inizio del programma');
-//
-// // Acquisisci data dal sistemna
-// annoCorrente = new Date().getFullYear()
-//
-// // Acquisisci dati da utente
-// nome    = prompt('Qual è il tuo nome?');
-// cognome = prompt('Qual è il tuo cognome?');
-// colore  = prompt('Qual è il tuo colore preferito?');
-//
-// // Genera password
-// pass = nome + cognome + colore + annoCorrente;
-// console.log('La password generata è ' +pass);
-//
-// //Scrivi dati a video
-// document.getElementById('nome').innerText += " " + nome;
-// document.getElementById('cognome').innerText += " " + cognome;
-// document.getElementById('colore').innerText += " " + colore;
-// document.getElementById('password').innerText = pass;
-//
-//
-// console.log('Programma terminato con successo');
-// console.groupEnd('Debug');
-//  // /Debug
-
 function compra(){
-   alert('compro un biglietto!');
- }
+  var km, eta;        //Km da  percorrere ed età passeggero.
+  var costoKm;         //Costo fisso al km
+  var scontoPerc;      //Sconto in percentuale
+  var prezzo;         //Prezzo senza sconto
+  var prezzoFinale;
+
+  // Inizializza variabili
+  costoKm = 0.21;     //0.21€ al km
+
+  // Acquisci dati utente
+  // Acquisci km da percorrere
+  km = prompt('Inserisci km');
+  console.log(km);
+
+  // Controlla km è un valore numerico
+  if (isNaN(km) === true){
+    // Alert errore
+    alert('errore - dato non valido');
+  }else{
+
+    // Acquisisci età utente
+    eta = prompt('Inserisci eta');
+    console.log(eta);
+
+    // Controlla se età utente è un valore numerico
+    if (isNaN(eta) === true){
+      // Alert errore
+      alert('errore - dato non valido');
+    }else{
+
+    // Trasforma input del prompt in valori Int
+    km = parseInt(km);
+    eta = parseInt(eta);
+    console.log(km);
+    console.log(eta);
+
+    // Applica eventuale sconto
+    //Inizializza sconto come numero
+    sconto= 0;
+
+    // Sconto minorenni
+    if (eta < 18){
+      sconto = 20;
+    }
+
+    // Sconto anziani
+    if (eta >= 65){
+      sconto = 40;
+    }
+
+    // Calcola prezzoFinale
+    prezzo = costoKm * km;
+    prezzoFinale = prezzo * (100 - sconto) / 100;
+
+    // Debug
+    console.log('Prezzo senza sconto:' + prezzo);
+    console.log('Sconto applicato:' + sconto);
+    console.log('Prezzo finale:' + prezzoFinale);
+    }
+
+    // Scrivi risultato sulla pagina html
+    document.getElementById('js-km').innerText = km +'km';
+    document.getElementById('js-eta').innerText = eta;
+    document.getElementById('js-prezzo').innerText = prezzo +'€';
+    document.getElementById('js-sconto').innerText = sconto + '%';
+    document.getElementById('js-prezzoFinale').innerText = prezzoFinale + '€';
+
+    // Evidenzia in rosso sconto se > 0
+
+    if (eta < 18 || eta >= 65){
+      document.getElementById('js-eta').style.color = 'green';
+    }else{
+      document.getElementById('js-eta').style.color = '#999';
+    }
+
+    if (sconto > 0){
+      document.getElementById('js-sconto').style = 'font-weight: bold';
+      document.getElementById('js-sconto').style.color = 'green';
+    }else{
+      document.getElementById('js-sconto').style = 'font-weight: normal';
+      document.getElementById('js-sconto').style.color = '#999';
+    }
+
+  }
+}
